@@ -4,7 +4,7 @@ export default class ListaPersonas extends Component {
   render() {
     const { personas } = this.props;
 
-    if (!personas || personas.length === 0) {
+    if (!Array.isArray(personas) || personas.length === 0) {
       return <p>No hay personas registradas.</p>;
     }
 
