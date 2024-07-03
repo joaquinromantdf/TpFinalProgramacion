@@ -4,7 +4,6 @@ import axios from "axios";
 export default class EditarPersona extends Component {
   constructor(props) {
     super(props);
-
     // Estado inicial con los datos de la persona
     this.state = {
       documento: this.props.persona.documento,
