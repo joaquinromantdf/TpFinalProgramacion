@@ -21,10 +21,10 @@ export default class AgregarPersona extends Component {
 
   handleSubmit = (event) => {
     event.preventDefault();
-
+  
     const { documento, nombres, apellidos, fechaNac, telefono, domicilio, mail } = this.state;
     const { token, onPersonaAgregada } = this.props;
-
+  
     axios
       .post(
         "https://personas.ctpoba.edu.ar/api/personas",
@@ -49,7 +49,7 @@ export default class AgregarPersona extends Component {
         console.error("Error agregando persona:", error);
         this.setState({ error: error.message });
       });
-  };
+  };  
 
   render() {
     const { documento, nombres, apellidos, fechaNac, telefono, domicilio, mail, error } = this.state;

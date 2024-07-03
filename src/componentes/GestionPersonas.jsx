@@ -20,7 +20,9 @@ export default class GestionPersonas extends Component {
     return (
       <div>
         <h2>Gestionar Personas</h2>
+        {/* Componente para agregar persona */}
         <AgregarPersona token={token} onPersonaAgregada={this.agregarPersona} />
+        {/* Componente para mostrar lista de personas */}
         <ListaPersonas personas={personas} />
       </div>
     );

@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import Registro from "./componentes/Registro";
 import IniciarSesion from "./componentes/IniciarSesion";
 import GestionPersonas from "./componentes/GestionPersonas";
+import "./App.css";
+
 
 class App extends Component {
   state = {
