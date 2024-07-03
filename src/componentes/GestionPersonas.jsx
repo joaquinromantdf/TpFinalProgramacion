@@ -1,10 +1,29 @@
 import React, { Component } from "react";
-import AgregarPersona from "./AgregarPersona";
+import axios from "axios";
 import ListaPersonas from "./ListaPersonas";
+import AgregarPersona from "./AgregarPersona";
 
 export default class GestionPersonas extends Component {
   state = {
     personas: [],
+  };
+
+  componentDidMount() {
+    this.fetchPersonas();
+  }
+
+  fetchPersonas = () => {
+    const { token } = this.props;
+    axios
+      .get("https://personas.ctpoba.edu.ar/api/personas", {
+        headers: { Authorization: `Bearer ${token}` },
+      })
+      .then((response) => {
+        this.setState({ personas: response.data });
+      })
+      .catch((error) => {
+        console.error("Error fetching personas:", error);
+      });
   };
 
   onPersonaAgregada = (persona) => {
@@ -15,12 +34,13 @@ export default class GestionPersonas extends Component {
 
   render() {
     const { token } = this.props;
+    const { personas } = this.state;
 
     return (
       <div>
         <h2>Gestionar Personas</h2>
         <AgregarPersona token={token} onPersonaAgregada={this.onPersonaAgregada} />
-        <ListaPersonas token={token} personas={this.state.personas} />
+        <ListaPersonas personas={personas} />
       </div>
     );
   }
