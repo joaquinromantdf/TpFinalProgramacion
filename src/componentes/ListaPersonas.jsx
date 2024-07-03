@@ -14,7 +14,7 @@ export default class ListaPersonas extends Component {
         <ul>
           {personas.map((persona, index) => (
             <li key={persona.persona_id || persona.id || index}>
-              {persona && persona.nombres ? 
+              {persona.nombres && persona.apellidos && persona.documento ? 
                 `${persona.nombres} ${persona.apellidos} - ${persona.documento}` : 
                 'Datos incompletos'}
             </li>
