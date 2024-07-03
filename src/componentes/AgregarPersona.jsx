@@ -33,7 +33,7 @@ export default class AgregarPersona extends Component {
       )
       .then((response) => {
         const newPersona = response.data.persona || response.data;
-        onPersonaAgregada(newPersona);
+        onPersonaAgregada(newPersona); // Llama a la función en el padre para agregar la persona
         this.setState({
           documento: "",
           nombres: "",
