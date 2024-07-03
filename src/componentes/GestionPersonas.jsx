@@ -1,15 +1,15 @@
 import React, { Component } from "react";
-import ListaPersonas from "./ListaPersonas";
 import AgregarPersona from "./AgregarPersona";
+import ListaPersonas from "./ListaPersonas";
 
 export default class GestionPersonas extends Component {
   state = {
-    personas: []
+    personas: [],
   };
 
   onPersonaAgregada = (persona) => {
     this.setState((prevState) => ({
-      personas: [...prevState.personas, persona]
+      personas: [...prevState.personas, persona],
     }));
   };
 
@@ -20,7 +20,7 @@ export default class GestionPersonas extends Component {
       <div>
         <h2>Gestionar Personas</h2>
         <AgregarPersona token={token} onPersonaAgregada={this.onPersonaAgregada} />
-        <ListaPersonas personas={this.state.personas} />
+        <ListaPersonas token={token} personas={this.state.personas} />
       </div>
     );
   }

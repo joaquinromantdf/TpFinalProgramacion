@@ -7,24 +7,22 @@ class App extends Component {
   state = {
     vista: "iniciarSesion", // 'iniciarSesion', 'registro', 'gestionPersonas'
     token: null,
-    user: null,
   };
 
   cambiarVista = (vista) => {
     this.setState({ vista });
   };
 
-  onLogin = (token, user) => {
-    this.setState({ token, user, vista: "gestionPersonas" });
+  onLogin = (token) => {
+    this.setState({ token, vista: "gestionPersonas" });
   };
 
   onLogout = () => {
-    this.setState({ token: null, user: null, vista: "iniciarSesion" });
+    this.setState({ token: null, vista: "iniciarSesion" });
   };
 
   render() {
-    const { vista, token, user } = this.state;
-
+    const {vista} = this.state;
     return (
       <div>
         {vista === "registro" && (
@@ -38,9 +36,9 @@ class App extends Component {
         )}
         {vista === "gestionPersonas" && (
           <div>
-            <h1>Bienvenido, {user}</h1>
+            <h1>Bienvenido</h1>
             <button onClick={this.onLogout}>Cerrar Sesión</button>
-            <GestionPersonas token={token} />
+            <GestionPersonas token={this.state.token} />
           </div>
         )}
       </div>

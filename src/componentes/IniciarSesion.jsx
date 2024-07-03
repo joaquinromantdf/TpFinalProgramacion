@@ -14,25 +14,35 @@ export default class IniciarSesion extends Component {
 
   handleSubmit = (e) => {
     e.preventDefault();
+
+    const { user, pass } = this.state;
+
     axios
-      .post("https://personas.ctpoba.edu.ar/api/ingresar", this.state)
+      .post("https://personas.ctpoba.edu.ar/api/ingresar", { user, pass })
       .then((response) => {
-        console.log("Respuesta de la API:", response.data); // Añade este mensaje de depuración
-        this.props.onLogin(response.data.token, response.data.user);
+        const { token, user } = response.data;
+        if (token) {
+          this.props.onLogin(token, user); // Llama a la función onLogin del padre con el token y el usuario
+        } else {
+          this.setState({ error: "Credenciales inválidas" });
+        }
       })
       .catch((error) => {
         console.error("Error en la solicitud:", error);
-        this.setState({ error: error.message });
+        this.setState({ error: "Error al iniciar sesión" });
       });
   };
 
   render() {
+    const { user, pass, error } = this.state;
+
     return (
       <div>
         <form onSubmit={this.handleSubmit}>
           <input
             type="text"
             name="user"
+            value={user}
             placeholder="Usuario"
             onChange={this.handleChange}
             required
@@ -40,13 +50,14 @@ export default class IniciarSesion extends Component {
           <input
             type="password"
             name="pass"
+            value={pass}
             placeholder="Contraseña"
             onChange={this.handleChange}
             required
           />
           <button type="submit">Iniciar Sesión</button>
         </form>
-        {this.state.error && <p style={{ color: "red" }}>{this.state.error}</p>}
+        {error && <p style={{ color: "red" }}>{error}</p>}
         <p>
           ¿No tienes cuenta?{" "}
           <a href="#" onClick={() => this.props.cambiarVista("registro")}>

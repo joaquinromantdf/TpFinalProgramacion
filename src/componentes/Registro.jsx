@@ -17,13 +17,31 @@ export default class Registro extends Component {
 
   handleSubmit = (e) => {
     e.preventDefault();
-    console.log("Datos del formulario:", this.state); // Añade este mensaje de depuración
+
+    const { user, pass, nombres, apellidos, documento } = this.state;
+
+    // Enviar datos al servidor
     axios
-      .post("https://personas.ctpoba.edu.ar/api/registrar", this.state)
+      .post("https://personas.ctpoba.edu.ar/api/registrar", {
+        user,
+        pass,
+        nombres,
+        apellidos,
+        documento,
+      })
       .then((response) => {
-        console.log("Respuesta de la API:", response.data); // Añade este mensaje de depuración
-        // manejar respuesta, posiblemente iniciar sesión automáticamente
-        this.props.cambiarVista("iniciarSesion");
+        console.log("Respuesta de la API:", response.data); // Depura para ver la respuesta de la API
+        // Manejar la respuesta según sea necesario, por ejemplo, redirigir o mostrar un mensaje de éxito
+        alert("Usuario registrado exitosamente");
+        // Reiniciar el estado del formulario
+        this.setState({
+          user: "",
+          pass: "",
+          nombres: "",
+          apellidos: "",
+          documento: "",
+          error: null,
+        });
       })
       .catch((error) => {
         console.error("Error en la solicitud:", error);
@@ -32,12 +50,16 @@ export default class Registro extends Component {
   };
 
   render() {
+    const { user, pass, nombres, apellidos, documento, error } = this.state;
+
     return (
       <div>
+        <h2>Registro de Usuario</h2>
         <form onSubmit={this.handleSubmit}>
           <input
             type="text"
             name="user"
+            value={user}
             placeholder="Usuario"
             onChange={this.handleChange}
             required
@@ -45,6 +67,7 @@ export default class Registro extends Component {
           <input
             type="password"
             name="pass"
+            value={pass}
             placeholder="Contraseña"
             onChange={this.handleChange}
             required
@@ -52,6 +75,7 @@ export default class Registro extends Component {
           <input
             type="text"
             name="nombres"
+            value={nombres}
             placeholder="Nombres"
             onChange={this.handleChange}
             required
@@ -59,6 +83,7 @@ export default class Registro extends Component {
           <input
             type="text"
             name="apellidos"
+            value={apellidos}
             placeholder="Apellidos"
             onChange={this.handleChange}
             required
@@ -66,13 +91,14 @@ export default class Registro extends Component {
           <input
             type="text"
             name="documento"
+            value={documento}
             placeholder="Documento"
             onChange={this.handleChange}
             required
           />
           <button type="submit">Registrar</button>
         </form>
-        {this.state.error && <p style={{ color: "red" }}>{this.state.error}</p>}
+        {error && <p style={{ color: "red" }}>{error}</p>}
         <p>
           ¿Ya tienes cuenta?{" "}
           <a href="#" onClick={() => this.props.cambiarVista("iniciarSesion")}>
