@@ -1,7 +1,7 @@
 import React, { Component } from "react";
-import Registro from "./componentes/Registro.jsx";
-import IniciarSesion from "./componentes/IniciarSesion.jsx";
-import GestionPersonas from "./componentes/GestionPersonas.jsx";
+import Registro from "./componentes/Registro";
+import IniciarSesion from "./componentes/IniciarSesion";
+import GestionPersonas from "./componentes/GestionPersonas";
 
 class App extends Component {
   state = {
