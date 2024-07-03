@@ -28,11 +28,11 @@ class App extends Component {
     return (
       <div>
         {vista === "registro" && (
-          <Registro cambiarVista={() => this.cambiarVista("iniciarSesion")} />
+          <Registro cambiarVista={this.cambiarVista} />
         )}
         {vista === "iniciarSesion" && (
           <IniciarSesion
-            cambiarVista={() => this.cambiarVista("registro")}
+            cambiarVista={this.cambiarVista}
             onLogin={this.onLogin}
           />
         )}

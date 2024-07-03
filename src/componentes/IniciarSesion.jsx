@@ -4,7 +4,8 @@ import axios from "axios";
 export default class IniciarSesion extends Component {
   state = {
     user: "",
-    pass: ""
+    pass: "",
+    error: null,
   };
 
   handleChange = (e) => {
@@ -13,12 +14,15 @@ export default class IniciarSesion extends Component {
 
   handleSubmit = (e) => {
     e.preventDefault();
-    axios.post("https://personas.ctpoba.edu.ar/api/ingresar", this.state)
-      .then(response => {
+    axios
+      .post("https://personas.ctpoba.edu.ar/api/ingresar", this.state)
+      .then((response) => {
+        console.log("Respuesta de la API:", response.data); // Añade este mensaje de depuración
         this.props.onLogin(response.data.token, response.data.user);
       })
-      .catch(error => {
-        console.error(error);
+      .catch((error) => {
+        console.error("Error en la solicitud:", error);
+        this.setState({ error: error.message });
       });
   };
 
@@ -26,11 +30,29 @@ export default class IniciarSesion extends Component {
     return (
       <div>
         <form onSubmit={this.handleSubmit}>
-          <input type="text" name="user" placeholder="Usuario" onChange={this.handleChange} />
-          <input type="password" name="pass" placeholder="Contraseña" onChange={this.handleChange} />
+          <input
+            type="text"
+            name="user"
+            placeholder="Usuario"
+            onChange={this.handleChange}
+            required
+          />
+          <input
+            type="password"
+            name="pass"
+            placeholder="Contraseña"
+            onChange={this.handleChange}
+            required
+          />
           <button type="submit">Iniciar Sesión</button>
         </form>
-        <p>¿No tienes cuenta? <a href="#" onClick={this.props.cambiarVista}>Regístrate</a></p>
+        {this.state.error && <p style={{ color: "red" }}>{this.state.error}</p>}
+        <p>
+          ¿No tienes cuenta?{" "}
+          <a href="#" onClick={() => this.props.cambiarVista("registro")}>
+            Regístrate
+          </a>
+        </p>
       </div>
     );
   }
