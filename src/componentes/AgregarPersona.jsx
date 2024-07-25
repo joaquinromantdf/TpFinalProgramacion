@@ -25,30 +25,30 @@ export default class AgregarPersona extends Component {
     const { documento, nombres, apellidos, fechaNac, telefono, domicilio, mail } = this.state;
     const { token, onPersonaAgregada } = this.props;
   
-    axios
-      .post(
-        "https://personas.ctpoba.edu.ar/api/personas",
-        { documento, nombres, apellidos, fechaNac, telefono, domicilio, mail },
-        { headers: { Authorization: `Bearer ${token}` } }
-      )
-      .then((response) => {
-        const newPersona = response.data.persona || response.data;
-        onPersonaAgregada(newPersona); // Llama a la función en el padre para agregar la persona
-        this.setState({
-          documento: "",
-          nombres: "",
-          apellidos: "",
-          fechaNac: "",
-          telefono: "",
-          domicilio: "",
-          mail: "",
-          error: null,
-        });
-      })
-      .catch((error) => {
-        console.error("Error agregando persona:", error);
-        this.setState({ error: error.message });
-      });
+  axios.post(
+    "https://personas.ctpoba.edu.ar/api/personas",
+    { documento, nombres, apellidos, fechaNac, telefono, domicilio, mail },
+    { headers: { Authorization: `Bearer ${token}` } }
+  )
+  .then((response) => {
+    const newPersona = response.data.persona || response.data;
+    onPersonaAgregada(newPersona); // Asegúrate de que 'newPersona' tiene todos los campos correctos
+    this.setState({
+      documento: "",
+      nombres: "",
+      apellidos: "",
+      fechaNac: "",
+      telefono: "",
+      domicilio: "",
+      mail: "",
+      error: null,
+    });
+  })
+  .catch((error) => {
+    console.error("Error agregando persona:", error);
+    this.setState({ error: error.message });
+  });
+
   };  
 
   render() {
