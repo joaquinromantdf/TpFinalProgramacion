@@ -25,31 +25,39 @@ export default class AgregarPersona extends Component {
     const { documento, nombres, apellidos, fechaNac, telefono, domicilio, mail } = this.state;
     const { token, onPersonaAgregada } = this.props;
   
-  axios.post(
-    "https://personas.ctpoba.edu.ar/api/personas",
-    { documento, nombres, apellidos, fechaNac, telefono, domicilio, mail },
-    { headers: { Authorization: `Bearer ${token}` } }
-  )
-  .then((response) => {
-    const newPersona = response.data.persona || response.data;
-    onPersonaAgregada(newPersona); // Asegúrate de que 'newPersona' tiene todos los campos correctos
-    this.setState({
-      documento: "",
-      nombres: "",
-      apellidos: "",
-      fechaNac: "",
-      telefono: "",
-      domicilio: "",
-      mail: "",
-      error: null,
-    });
-  })
-  .catch((error) => {
-    console.error("Error agregando persona:", error);
-    this.setState({ error: error.message });
-  });
-
+    axios.post(
+      "https://personas.ctpoba.edu.ar/api/personas",
+      { documento, nombres, apellidos, fechaNac, telefono, domicilio, mail },
+      { headers: { Authorization: `Bearer ${token}` } }
+    )
+    .then((response) => {
+      console.log("Respuesta de la API:", response.data); // Añade esta línea para depuración
+      const newPersona = response.data.persona || response.data;
+      onPersonaAgregada(newPersona); // Asegúrate de que 'newPersona' tiene todos los campos correctos
+      this.setState({
+        documento: "",
+        nombres: "",
+        apellidos: "",
+        fechaNac: "",
+        telefono: "",
+        domicilio: "",
+        mail: "",
+        error: null,
+      });
+    })
+    .catch((error) => {
+      console.error("Error agregando persona:", error);
+      this.setState({ error: error.message });
+    });  
   };  
+
+  agregarPersona = (persona) => {
+    console.log("Persona agregada:", persona); // Añadir esta línea para depuración
+    this.setState((prevState) => ({
+      personas: [...prevState.personas, persona]
+    }));
+  };
+  
 
   render() {
     const { documento, nombres, apellidos, fechaNac, telefono, domicilio, mail, error } = this.state;
