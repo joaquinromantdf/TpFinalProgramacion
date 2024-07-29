@@ -11,9 +11,10 @@ export default class GestionPersonas extends Component {
     console.log("Persona agregada al estado:", persona); // Añadir esta línea para depuración
     this.setState((prevState) => ({
       personas: [...prevState.personas, persona]
-    }));
+    }), () => {
+      console.log("Estado actualizado:", this.state.personas); // Añadir esta línea para verificar el estado actualizado
+    });
   };
-  
 
   render() {
     const { token } = this.props;
@@ -22,9 +23,7 @@ export default class GestionPersonas extends Component {
     return (
       <div>
         <h2>Gestionar Personas</h2>
-        {/* Componente para agregar persona */}
         <AgregarPersona token={token} onPersonaAgregada={this.agregarPersona} />
-        {/* Componente para mostrar lista de personas */}
         <ListaPersonas personas={personas} />
       </div>
     );
