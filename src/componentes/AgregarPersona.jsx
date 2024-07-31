@@ -25,15 +25,13 @@ export default class AgregarPersona extends Component {
     const { documento, nombres, apellidos, fechaNac, telefono, domicilio, mail } = this.state;
     const { token, onPersonaAgregada } = this.props;
 
-    // Verificar el token
     console.log("Token en AgregarPersona:", token);
 
-    // Aquí es donde se realiza la solicitud POST para agregar una persona
     axios
       .post(
         "https://personas.ctpoba.edu.ar/api/personas",
         { documento, nombres, apellidos, fechaNac, telefono, domicilio, mail },
-        { headers: { Authorization: this.props.token } }
+        { headers: { Authorization: token } }
       )
       .then((response) => {
         console.log("Respuesta de la API:", response.data);
@@ -57,12 +55,12 @@ export default class AgregarPersona extends Component {
   };
 
   render() {
-    const {documento, nombres, apellidos, fechaNac, telefono, domicilio, mail, error} = this.state;
+    const { documento, nombres, apellidos, fechaNac, telefono, domicilio, mail, error } = this.state;
 
     return (
       <div>
         <h2>Agregar Persona</h2>
-        <form>
+        <form onSubmit={this.handleSubmit}>
           <div>
             <label>Documento:</label>
             <input type="text" name="documento" value={documento} onChange={this.handleChange} required />
@@ -81,18 +79,18 @@ export default class AgregarPersona extends Component {
           </div>
           <div>
             <label>Teléfono:</label>
-            <input type="text" name="telefono" value={telefono} onChange={this.handleChange} required/> 
+            <input type="text" name="telefono" value={telefono} onChange={this.handleChange} required />
           </div>
           <div>
             <label>Domicilio:</label>
-            <input type="text" name="domicilio" value={domicilio} onChange={this.handleChange} required/>
+            <input type="text" name="domicilio" value={domicilio} onChange={this.handleChange} required />
           </div>
           <div>
             <label>Mail:</label>
             <input type="email" name="mail" value={mail} onChange={this.handleChange} />
           </div>
           {error && <p style={{ color: "red" }}>{error}</p>}
-          <button type="submit" onClick={this.handleSubmit}>Agregar Persona</button>
+          <button type="submit">Agregar Persona</button>
         </form>
       </div>
     );
