@@ -57,12 +57,12 @@ export default class AgregarPersona extends Component {
   };
 
   render() {
-    const { documento, nombres, apellidos, fechaNac, telefono, domicilio, mail, error } = this.state;
+    const {documento, nombres, apellidos, fechaNac, telefono, domicilio, mail, error} = this.state;
 
     return (
       <div>
         <h2>Agregar Persona</h2>
-        <form onSubmit={this.handleSubmit}>
+        <form>
           <div>
             <label>Documento:</label>
             <input type="text" name="documento" value={documento} onChange={this.handleChange} required />
@@ -81,18 +81,18 @@ export default class AgregarPersona extends Component {
           </div>
           <div>
             <label>Teléfono:</label>
-            <input type="text" name="telefono" value={telefono} onChange={this.handleChange} />
+            <input type="text" name="telefono" value={telefono} onChange={this.handleChange} required/> 
           </div>
           <div>
             <label>Domicilio:</label>
-            <input type="text" name="domicilio" value={domicilio} onChange={this.handleChange} />
+            <input type="text" name="domicilio" value={domicilio} onChange={this.handleChange} required/>
           </div>
           <div>
             <label>Mail:</label>
             <input type="email" name="mail" value={mail} onChange={this.handleChange} />
           </div>
           {error && <p style={{ color: "red" }}>{error}</p>}
-          <button type="submit">Agregar Persona</button>
+          <button type="submit" onClick={this.handleSubmit}>Agregar Persona</button>
         </form>
       </div>
     );

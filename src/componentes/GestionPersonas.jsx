@@ -23,8 +23,8 @@ export default class GestionPersonas extends Component {
     return (
       <div>
         <h2>Gestionar Personas</h2>
-        <AgregarPersona token={token} onPersonaAgregada={this.agregarPersona} />
-        <ListaPersonas personas={personas} />
+        <AgregarPersona token={token} onPersonaAgregada={this.agregarPersona}/>
+        <ListaPersonas personas={personas}/>
       </div>
     );
   }
