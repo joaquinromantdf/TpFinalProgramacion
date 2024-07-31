@@ -33,7 +33,7 @@ export default class AgregarPersona extends Component {
       .post(
         "https://personas.ctpoba.edu.ar/api/personas",
         { documento, nombres, apellidos, fechaNac, telefono, domicilio, mail },
-        { headers: { Authorization: `Bearer ${token}` } }
+        { headers: { Authorization: this.state.token } }
       )
       .then((response) => {
         console.log("Respuesta de la API:", response.data);
