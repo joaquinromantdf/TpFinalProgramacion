@@ -54,6 +54,8 @@ export default class AgregarPersona extends Component {
       });
   };
 
+  
+
   render() {
     const { documento, nombres, apellidos, fechaNac, telefono, domicilio, mail, error } = this.state;
 

@@ -9,13 +9,15 @@ export default class GestionPersonas extends Component {
     error: null
   };
 
-  handleSubmit = (event) => {
-    event.preventDefault();
+  componentDidMount() {
+    this.cargarPersonas();
+  }
+
+  cargarPersonas = () => {
     axios
       .get("https://personas.ctpoba.edu.ar/api/personas", {
-        headers: { Authorization: this.props.token }, 
-        personas: [ persona_id, documento, nombres, apellidos, fechaNac, telefono, domicilio, mail ] }
-      )
+        headers: { Authorization: this.props.token }
+      })
       .then((response) => {
         console.log("Respuesta de la API:", response.data);
         if (response.data && response.data.personas) {
@@ -30,7 +32,7 @@ export default class GestionPersonas extends Component {
         console.error("Error mostrando personas:", error);
         this.setState({ error: error.message });
       });
-  };  
+  };
 
   agregarPersona = (persona) => {
     console.log("Persona agregada al estado:", persona);
@@ -43,13 +45,14 @@ export default class GestionPersonas extends Component {
 
   render() {
     const { token } = this.props;
-    const { personas } = this.state;
+    const { personas, error } = this.state;
 
     return (
       <div>
         <h2>Gestionar Personas</h2>
-        <AgregarPersona token={token} onPersonaAgregada={this.agregarPersona}/>
-        <ListaPersonas personas={personas}/>
+        {error && <p style={{ color: 'red' }}>{error}</p>}
+        <AgregarPersona token={token} onPersonaAgregada={this.agregarPersona} />
+        <ListaPersonas personas={personas} />
       </div>
     );
   }
