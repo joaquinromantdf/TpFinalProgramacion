@@ -43,16 +43,28 @@
     margin-bottom: 20px;
   }
 
-  /* styles.css */
-.tarjeta {
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  padding: 16px;
-  margin: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.lista-tarjetas {
-  display: flex;
-  flex-wrap: wrap;
-}
+  .tarjeta {
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 16px;
+    margin: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .lista-tarjetas {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  
+  button {
+    background-color: #f44336;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 8px 16px;
+    cursor: pointer;
+  }
+  
+  button:hover {
+    background-color: #d32f2f;
+  }

@@ -6,13 +6,13 @@ export default class EditarPersona extends Component {
     super(props);
     // Estado inicial con los datos de la persona
     this.state = {
-      documento: this.props.persona.documento,
-      nombres: this.props.persona.nombres,
-      apellidos: this.props.persona.apellidos,
-      fechaNac: this.props.persona.fechaNac,
-      telefono: this.props.persona.telefono,
-      domicilio: this.props.persona.domicilio,
-      mail: this.props.persona.mail,
+      documento: props.persona.documento || "",
+      nombres: props.persona.nombres || "",
+      apellidos: props.persona.apellidos || "",
+      fechaNac: props.persona.fechaNac || "",
+      telefono: props.persona.telefono || "",
+      domicilio: props.persona.domicilio || "",
+      mail: props.persona.mail || "",
       error: null,
     };
   }
@@ -29,8 +29,11 @@ export default class EditarPersona extends Component {
     // Datos actualizados de la persona desde el estado
     const { documento, nombres, apellidos, fechaNac, telefono, domicilio, mail } = this.state;
 
+    // ID de la persona
+    const { persona_id } = this.props.persona;
+
     // URL para actualizar la persona específica usando su ID
-    const url = `https://personas.ctpoba.edu.ar/api/personas/${this.props.persona.persona_id}`;
+    const url = `/api/personas/${persona_id}`;
 
     // Token de autorización para la API
     const headers = { Authorization: `Bearer ${this.props.token}` };
