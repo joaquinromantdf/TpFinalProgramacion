@@ -1,10 +1,7 @@
 import React, { Component } from "react";
+import TarjetaPersona from "./TarjetaPersona";
 
 export default class ListaPersonas extends Component {
-  handleEliminar = (id) => {
-    this.props.onEliminarPersona(id);
-  };
-
   render() {
     const { personas } = this.props;
 
@@ -17,19 +14,11 @@ export default class ListaPersonas extends Component {
     return (
       <div>
         <h2>Lista de Personas</h2>
-        <ul>
-          {personas.map((persona) => (
-            <li key={persona.persona_id}>
-              <p>Nombre: {persona.nombres} {persona.apellidos}</p>
-              <p>DNI: {persona.documento}</p>
-              <p>Fecha de Nacimiento: {persona.fechaNac}</p>
-              <p>Teléfono: {persona.telefono}</p>
-              <p>Domicilio: {persona.domicilio}</p>
-              <p>Email: {persona.mail}</p>
-              <button onClick={() => this.handleEliminar(persona.persona_id)}>Eliminar</button>
-            </li>
+        <div className="lista-tarjetas">
+          {personas.map((persona, index) => (
+            <TarjetaPersona key={persona.persona_id || index} persona={persona} />
           ))}
-        </ul>
+        </div>
       </div>
     );
   }
