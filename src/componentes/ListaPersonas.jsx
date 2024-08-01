@@ -1,6 +1,10 @@
 import React, { Component } from "react";
 
 export default class ListaPersonas extends Component {
+  handleEliminar = (id) => {
+    this.props.onEliminarPersona(id);
+  };
+
   render() {
     const { personas } = this.props;
 
@@ -14,15 +18,15 @@ export default class ListaPersonas extends Component {
       <div>
         <h2>Lista de Personas</h2>
         <ul>
-          {personas.map((persona, index) => (
-            <li key={persona.persona_id || index}>
-              <p>Nombre: {persona.nombres}</p> 
-              <p>Apellido:{persona.apellidos}</p>
+          {personas.map((persona) => (
+            <li key={persona.persona_id}>
+              <p>Nombre: {persona.nombres} {persona.apellidos}</p>
               <p>DNI: {persona.documento}</p>
               <p>Fecha de Nacimiento: {persona.fechaNac}</p>
               <p>Teléfono: {persona.telefono}</p>
               <p>Domicilio: {persona.domicilio}</p>
               <p>Email: {persona.mail}</p>
+              <button onClick={() => this.handleEliminar(persona.persona_id)}>Eliminar</button>
             </li>
           ))}
         </ul>
