@@ -15,9 +15,9 @@ export default class ListaPersonas extends Component {
         <h2>Lista de Personas</h2>
         <ul>
           {personas.map((persona, index) => (
-            <li key={persona.id || index}>
+            <li key={persona.persona_id || index}>
               <p>Nombre: {persona.nombres}</p> 
-              <p>Apellido: {persona.apellidos}</p>
+              <p>Apellido:{persona.apellidos}</p>
               <p>DNI: {persona.documento}</p>
               <p>Fecha de Nacimiento: {persona.fechaNac}</p>
               <p>Teléfono: {persona.telefono}</p>

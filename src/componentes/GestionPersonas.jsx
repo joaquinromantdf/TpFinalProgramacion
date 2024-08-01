@@ -14,24 +14,21 @@ export default class GestionPersonas extends Component {
   }
 
   cargarPersonas = () => {
-    axios
-      .get("https://personas.ctpoba.edu.ar/api/personas", {
-        headers: { Authorization: this.props.token }
-      })
-      .then((response) => {
-        console.log("Respuesta de la API:", response.data);
-        if (response.data && response.data.personas) {
-          this.setState({
-            personas: response.data.personas
-          });
-        } else {
-          console.error("Respuesta de la API no contiene personas.");
-        }
-      })
-      .catch((error) => {
-        console.error("Error mostrando personas:", error);
-        this.setState({ error: error.message });
-      });
+    axios.get("https://personas.ctpoba.edu.ar/api/personas", {
+      headers: { Authorization: this.props.token }
+    })
+    .then((response) => {
+      console.log("Respuesta de la API:", response.data);
+      if (response.data && response.data.personas) {
+        this.setState({ personas: response.data.personas });
+      } else {
+        console.error("Respuesta de la API no contiene personas.");
+      }
+    })
+    .catch((error) => {
+      console.error("Error mostrando personas:", error);
+      this.setState({ error: error.message });
+    });
   };
 
   agregarPersona = (persona) => {

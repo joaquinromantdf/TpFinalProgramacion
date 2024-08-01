@@ -3,95 +3,71 @@ import axios from "axios";
 
 export default class AgregarPersona extends Component {
   state = {
-    documento: "",
     nombres: "",
     apellidos: "",
+    documento: "",
     fechaNac: "",
     telefono: "",
     domicilio: "",
     mail: "",
-    error: null,
+    error: null
   };
 
   handleChange = (event) => {
-    this.setState({
-      [event.target.name]: event.target.value,
-    });
+    this.setState({ [event.target.name]: event.target.value });
   };
 
   handleSubmit = (event) => {
     event.preventDefault();
+    const { nombres, apellidos, documento, fechaNac, telefono, domicilio, mail } = this.state;
+    const nuevaPersona = { nombres, apellidos, documento, fechaNac, telefono, domicilio, mail };
 
-    const { documento, nombres, apellidos, fechaNac, telefono, domicilio, mail } = this.state;
-    const { token, onPersonaAgregada } = this.props;
-
-    console.log("Token en AgregarPersona:", token);
-
-    axios
-      .post(
-        "https://personas.ctpoba.edu.ar/api/personas",
-        { documento, nombres, apellidos, fechaNac, telefono, domicilio, mail },
-        { headers: { Authorization: token } }
-      )
-      .then((response) => {
-        console.log("Respuesta de la API:", response.data);
-        const newPersona = response.data.persona || response.data;
-        onPersonaAgregada(newPersona); // Llama a la función del componente padre
+    axios.post("https://personas.ctpoba.edu.ar/api/personas", nuevaPersona, {
+      headers: { Authorization: this.props.token }
+    })
+    .then(response => {
+      console.log("Respuesta de la API al agregar persona:", response.data);
+      if (response.data && response.data.persona_id) {
+        const personaAgregada = {
+          ...nuevaPersona,
+          id: response.data.persona_id
+        };
+        this.props.onPersonaAgregada(personaAgregada);
         this.setState({
-          documento: "",
           nombres: "",
           apellidos: "",
+          documento: "",
           fechaNac: "",
           telefono: "",
           domicilio: "",
           mail: "",
-          error: null,
+          error: null
         });
-      })
-      .catch((error) => {
-        console.error("Error agregando persona:", error);
-        this.setState({ error: error.message });
-      });
+      } else {
+        console.error("Respuesta de la API no contiene persona_id.");
+      }
+    })
+    .catch(error => {
+      console.error("Error agregando persona:", error);
+      this.setState({ error: error.message });
+    });
   };
 
-  
-
   render() {
-    const { documento, nombres, apellidos, fechaNac, telefono, domicilio, mail, error } = this.state;
+    const { nombres, apellidos, documento, fechaNac, telefono, domicilio, mail, error } = this.state;
 
     return (
       <div>
         <h2>Agregar Persona</h2>
+        {error && <p style={{ color: 'red' }}>{error}</p>}
         <form onSubmit={this.handleSubmit}>
-          <div>
-            <label>Documento:</label>
-            <input type="text" name="documento" value={documento} onChange={this.handleChange} required />
-          </div>
-          <div>
-            <label>Nombres:</label>
-            <input type="text" name="nombres" value={nombres} onChange={this.handleChange} required />
-          </div>
-          <div>
-            <label>Apellidos:</label>
-            <input type="text" name="apellidos" value={apellidos} onChange={this.handleChange} required />
-          </div>
-          <div>
-            <label>Fecha de Nacimiento:</label>
-            <input type="date" name="fechaNac" value={fechaNac} onChange={this.handleChange} required />
-          </div>
-          <div>
-            <label>Teléfono:</label>
-            <input type="text" name="telefono" value={telefono} onChange={this.handleChange} required />
-          </div>
-          <div>
-            <label>Domicilio:</label>
-            <input type="text" name="domicilio" value={domicilio} onChange={this.handleChange} required />
-          </div>
-          <div>
-            <label>Mail:</label>
-            <input type="email" name="mail" value={mail} onChange={this.handleChange} />
-          </div>
-          {error && <p style={{ color: "red" }}>{error}</p>}
+          <input type="text" name="nombres" value={nombres} onChange={this.handleChange} placeholder="Nombres" required />
+          <input type="text" name="apellidos" value={apellidos} onChange={this.handleChange} placeholder="Apellidos" required />
+          <input type="text" name="documento" value={documento} onChange={this.handleChange} placeholder="DNI" required />
+          <input type="date" name="fechaNac" value={fechaNac} onChange={this.handleChange} placeholder="Fecha de Nacimiento" required />
+          <input type="text" name="telefono" value={telefono} onChange={this.handleChange} placeholder="Teléfono" required />
+          <input type="text" name="domicilio" value={domicilio} onChange={this.handleChange} placeholder="Domicilio" required />
+          <input type="email" name="mail" value={mail} onChange={this.handleChange} placeholder="Email" required />
           <button type="submit">Agregar Persona</button>
         </form>
       </div>
