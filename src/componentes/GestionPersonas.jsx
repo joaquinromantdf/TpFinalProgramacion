@@ -40,6 +40,12 @@ export default class GestionPersonas extends Component {
     });
   };
 
+  eliminarPersona = (persona_id) => {
+    this.setState((prevState) => ({
+      personas: prevState.personas.filter(persona => persona.persona_id !== persona_id)
+    }));
+  };
+
   render() {
     const { token } = this.props;
     const { personas, error } = this.state;
@@ -49,7 +55,11 @@ export default class GestionPersonas extends Component {
         <h2>Gestionar Personas</h2>
         {error && <p style={{ color: 'red' }}>{error}</p>}
         <AgregarPersona token={token} onPersonaAgregada={this.agregarPersona} />
-        <ListaPersonas personas={personas} />
+        <ListaPersonas 
+          personas={personas} 
+          token={token}
+          onPersonaEliminada={this.eliminarPersona}
+        />
       </div>
     );
   }
