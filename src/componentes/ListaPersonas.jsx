@@ -5,7 +5,7 @@ export default class ListaPersonas extends Component {
   render() {
     const { personas, token, onPersonaEliminada } = this.props;
 
-    console.log("Personas recibidas:", personas); // Para depuración
+    console.log("Personas recibidas:", personas); 
 
     if (!Array.isArray(personas) || personas.length === 0) {
       return <p>No hay personas registradas.</p>;

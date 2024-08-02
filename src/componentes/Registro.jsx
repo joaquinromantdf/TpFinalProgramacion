@@ -30,8 +30,7 @@ export default class Registro extends Component {
         documento,
       })
       .then((response) => {
-        console.log("Respuesta de la API:", response.data); // Depura para ver la respuesta de la API
-        // Manejar la respuesta según sea necesario, por ejemplo, redirigir o mostrar un mensaje de éxito
+        console.log("Respuesta de la API:", response.data); 
         alert("Usuario registrado exitosamente");
         // Reiniciar el estado del formulario
         this.setState({

@@ -22,7 +22,7 @@ export default class IniciarSesion extends Component {
       .then((response) => {
         const { token, user } = response.data;
         if (token) {
-          this.props.onLogin(token, user);// Llama a la función onLogin del padre con el token y el usuario
+          this.props.onLogin(token, user);// llama a la función onLogin del padre con el token y el usuario
           console.log("el token es", token)
         } else {
           this.setState({ error: "Credenciales inválidas" });
