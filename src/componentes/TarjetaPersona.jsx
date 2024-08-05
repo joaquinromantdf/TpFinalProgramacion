@@ -14,7 +14,7 @@ export default class TarjetaPersona extends Component {
         <p>Domicilio: {persona.domicilio}</p>
         <p>Email: {persona.mail}</p>
         <EliminarPersona 
-          persona_id={persona.persona_id}
+          persona={persona}
           token={token}
           onPersonaEliminada={onPersonaEliminada}
         />
